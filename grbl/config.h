@@ -469,7 +469,7 @@
 // electrical interference on the signal cables from external sources. It's recommended to first
 // use shielded signal cables with their shielding connected to ground (old USB/computer cables 
 // work well and are cheap to find) and wire in a low-pass circuit into each limit pin.
-// #define ENABLE_SOFTWARE_DEBOUNCE // Default disabled. Uncomment to enable.
+#define ENABLE_SOFTWARE_DEBOUNCE // Default disabled. Uncomment to enable.
 
 // Configures the position after a probing cycle during Grbl's check mode. Disabled sets
 // the position to the probe target, when enabled sets the position to the start position.
@@ -483,7 +483,7 @@
 // that the switches don't bounce, we recommend enabling this option. This will help prevent
 // triggering a hard limit when the machine disengages from the switch.
 // NOTE: This option has no effect if SOFTWARE_DEBOUNCE is enabled.
-// #define HARD_LIMIT_FORCE_STATE_CHECK // Default disabled. Uncomment to enable.
+#define HARD_LIMIT_FORCE_STATE_CHECK // Default disabled. Uncomment to enable.
 
 // Adjusts homing cycle search and locate scalars. These are the multipliers used by Grbl's
 // homing cycle to ensure the limit switches are engaged and cleared through each phase of

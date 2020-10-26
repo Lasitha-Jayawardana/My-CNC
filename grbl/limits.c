@@ -58,7 +58,10 @@ void limits_init()
   #ifdef ENABLE_SOFTWARE_DEBOUNCE
     MCUSR &= ~(1<<WDRF);
     WDTCSR |= (1<<WDCE) | (1<<WDE);
-    WDTCSR = (1<<WDP0); // Set time-out at ~32msec.
+    //WDTCSR = (1<<WDP1) | (1<<WDP0); // Set time-out at ~0.25sec.
+	//WDTCSR =  (1<<WDP0); // Set time-out at ~32msec.
+	 WDTCSR = (1<<WDP1); // Set time-out at ~64msec.
+	
   #endif
 }
 
