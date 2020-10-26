@@ -32,7 +32,9 @@ Probe and set Zero ->
     
 ## Tools
 
-FlatCam.  (https://bitbucket.org/jpcgt/flatcam/downloads/)
+FlatCam.  (https://bitbucket.org/jpcgt/flatcam/downloads/).
 
-OpenCNCPilot. (https://github.com/martin2250/OpenCNCPilot/releases)
+OpenCNCPilot. (https://github.com/martin2250/OpenCNCPilot/releases).
+
+InkScape (https://inkscape.org/release/1.0.1/windows/).
 
