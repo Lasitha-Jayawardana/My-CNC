@@ -1,0 +1,73 @@
+Hint
+-----
+* Board thinckness consider as 2.3mm
+* If you use bottom layer then make sure that you want to get mirror otherwise it will engrave as reflected.
+
+Eagle
+_____
+- Load My CNC DRC file to eagle.
+- Using Manufacturing tool in right hand side. Look the Drill hole sizes and design as minimum different diameter. (Prefer to use one diameter for all.)
+
+- Use 1 layer Cam template in cam processor to generate gerber (Design should be Top layer).
+	If Design is Bottom layer then choose 2 layer template.
+			****Or use My Cam template files******
+	In Cam processor select "Profile" & if you used holes then untick the cutout checkbox(Otherwise Flatcam cutout tool Freeform cutting not working well).
+
+
+FlatCAM
+_______
+- Add copper top layer(or Bottom layer) and profile (board diameter layer) gerber files.
+		If you use bottom copper layer then goto Tools -> 2-sided PCB and set
+			Mirror axis 	= X
+			Axis Ref	= Box
+			under point/box reference >> Choose profile.gbr
+			then Mirror each gerber files & excellon file.
+
+- Tools-> Optimal Tool then find minimum distance.*****Use little bit smaller value than it as Tool diameter in Geometry.( Ex - Minimum distance = 0.2998 then tool dia= 0.2997)****
+- Genarate isolated Geometry using that diameter for top copper layer. ( Look carefully and check whether all parts are separate properly)
+- Double click profile.gbr & goto Cutout Tool.
+- In Cutout PCB use 
+	Tool Dia	> my EndMill tool diameter(My End mills are 1.5mm, 2mm, 2.5mm )
+	Cut Z 		> -2.3mm 
+	Multi Depth	> 1.15mm
+	Margin		> 0
+	Gap Size 	> 2
+	Gaps		> 2
+					then genarate Freeform Geometry.
+
+- Select Exellon drill file then Tool table shown you all drill hole sizes.You can select from # tag for multiple drilling hole in a one .nc file. Otherwise you can do same thing for different hole size.
+	+ If you want to drill using same tool diameters in Tool table, tick Tool change & set
+		Cut Z 		= -2.3mm
+		Travel Z 	= 2mm
+		Tool change Z	= 30mm			*****Trick - Use little bit small tool than Tool table for my CNC. (Ex- Tool table dia ->0.813mm then use 0.8mm bit******
+		End move Z	= 30mm
+		Feedrate Z	= 30
+					then click Create Drills Gcode to get directly CNC (.nc) files.
+		******if you untick tool change and select multiples in tool table then all multiple holes are drill continuosly by CNC********. 
+
+	+ Otherwise you want to use small tool to drill larger holes you should create a Geometry.(In here also can select multiple hole sizes drill with same tool)
+		My Drill tool Diameters are 0.3mm, 0.4mm, 0.5mm, 0.6mm, 0.7mm, 0.8mm, 0.9mm, 1.0mm, 1.1mm, 1.2mm.
+		Under Mill Holes set tool diameter smaller then or equal to smallest hole size in the Tool table selection.
+		then Create Mill Drills Geo. (In this method all holes are drilling with Z as well as mill X, Y direction to reach to that hole size.)
+
+- For all created Geometry create CNC jobs by double clicking Geometry.
+	For engraving Geometry ->	
+					Cut Z 		= -0.15
+					Travel Z	= 2
+					End Move Z	= 30
+					Feed Rate XY	= 150
+					Feed rate Z 	= 30
+								Then Genarate CNC Job Object.
+	For Drill Geometry ->
+					Cut z		=-2.3
+					others same as above
+
+	For Board Cutout ->
+					Cut Z 		= -2.3
+					Multi Deth 	= 1.15
+					Travel Z	= 2
+					End Move Z	= 30
+					Feed Rate XY	= 100
+					Feed rate Z 	= 30
+								Then Genarate CNC Job Object.
+			
