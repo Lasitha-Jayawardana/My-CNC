@@ -31,7 +31,7 @@ _______
 	Cut Z 		> -2.3mm 
 	Multi Depth	> 1.15mm
 	Margin		> 0
-	Gap Size 	> 2
+	Gap Size 	> 1
 	Gaps		> 2
 					then genarate Freeform Geometry.
 
@@ -39,35 +39,76 @@ _______
 	+ If you want to drill using same tool diameters in Tool table, tick Tool change & set
 		Cut Z 		= -2.3mm
 		Travel Z 	= 2mm
-		Tool change Z	= 30mm			*****Trick - Use little bit small tool than Tool table for my CNC. (Ex- Tool table dia ->0.813mm then use 0.8mm bit******
-		End move Z	= 30mm
+		Tool change Z	= 25mm			*****Trick - Use little bit small tool than Tool table for my CNC. Because Drill can has small error. (Ex- Tool table dia ->0.813mm then use 0.8mm bit******
+		End move Z	= 25mm
 		Feedrate Z	= 30
 					then click Create Drills Gcode to get directly CNC (.nc) files.
 		******if you untick tool change and select multiples in tool table then all multiple holes are drill continuosly by CNC********. 
 
 	+ Otherwise you want to use small tool to drill larger holes you should create a Geometry.(In here also can select multiple hole sizes drill with same tool)
 		My Drill tool Diameters are 0.3mm, 0.4mm, 0.5mm, 0.6mm, 0.7mm, 0.8mm, 0.9mm, 1.0mm, 1.1mm, 1.2mm.
-		Under Mill Holes set tool diameter smaller then or equal to smallest hole size in the Tool table selection.
+		Under Mill Holes set tool diameter smaller than or equal to smallest hole size in the Tool table selection.
 		then Create Mill Drills Geo. (In this method all holes are drilling with Z as well as mill X, Y direction to reach to that hole size.)
 
 - For all created Geometry create CNC jobs by double clicking Geometry.
 	For engraving Geometry ->	
+
+				*********If you combine 2 Geometry then in Tool Table shows more than one tool then you should only select one tool in # to genarate CNC job. Otherwise 
+							CNC job can double the same path. *************
+
+				To clear trace well: 
+					[In tool table change TT to V.
+						V-Tip Dia	= 0.1
+						V-Tip Angle	= 60 ( But use Bit as 30 or 45 in CNC)]
+
+							but,
+
+				Prefer to use TT as default and Cut Z as follows.
 					Cut Z 		= -0.15
 					Travel Z	= 2
-					End Move Z	= 30
+					End Move Z	= 25
 					Feed Rate XY	= 150
 					Feed rate Z 	= 30
 								Then Genarate CNC Job Object.
+
 	For Drill Geometry ->
 					Cut z		=-2.3
+					XY feed rate	= 50 (If use Create Mill Drills Geo)
 					others same as above
 
 	For Board Cutout ->
 					Cut Z 		= -2.3
 					Multi Deth 	= 1.15
 					Travel Z	= 2
-					End Move Z	= 30
+					End Move Z	= 25
 					Feed Rate XY	= 100
 					Feed rate Z 	= 30
 								Then Genarate CNC Job Object.
 			
+CNC
+_______
+
+* Before auto levelling, use Probe & set Zero macros. otherwise it comeup with lot of issue. (When Height Map apply to any other .nc file, 
+	Make sure in that time also want to have same Z0 point same as the created.)
+* g53 g0 x10 y-50 z-6 command is use for goto xyz machine coordinates.
+* Auto leveling (Probing) has false probe when power supply was plugged.
+* Use 30 or 45 tip angle V bit for engraving. (If you use V bit in Yellow box, do not use SMD components)
+* Tide the bit well after changing.
+* Mount Copper board in every position as you can.
+
+	Step:
+		Home machine.
+		jogging XY to your work position.
+		set Zero(G10) in Manual tab.
+		Plug probe connecter.
+		Click Probe and set Zero macro.
+		Write down XYZ machine Coordinates.
+		Create height map using Auto leveling in Probing tab.
+		Click Apply HeightMap in Edit tab.
+		Start Engraving.
+	
+	If Crashed milling:
+
+		After crash milling, cannot use goto in file tab to continue the work. It may be milling as the worng.
+		After crashing, use Home machine and then Send command (g53 g0 x10 y-50) by changing  x and y maching coordinates as you wrote before.
+		Then again use (g53 g0 z-6) as your Machine coordinate to move Z.
