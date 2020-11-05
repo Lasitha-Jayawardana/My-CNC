@@ -26,9 +26,9 @@ Return to Zero ->
   
 Probe and set Zero ->
 
-    G38.2Z-10F20
-    
-    G92Z0
+    N10 G38.2 Z-2 F20
+    N30 G10 L20 P1 Z0
+    N20 G91 G0 Z1
     
 ## Tools
 
