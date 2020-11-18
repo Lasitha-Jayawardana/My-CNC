@@ -1,0 +1,13 @@
+MDF Board
+__________
+
+2 mm End Mill :
+	Feed rate	- 100 mm per min
+	Depth per pass	- 2 mm 
+	Plug Rate	- 40 mm per min
+
+
+
+
+
+****************Persfect***********
